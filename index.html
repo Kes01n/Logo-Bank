@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Logo Банк — ваш надёжный партнёр</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f0f5fa 0%, #e6edf4 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 32px;
+      box-shadow: 0 20px 40px rgba(0, 15, 30, 0.15), 0 6px 12px rgba(0, 0, 0, 0.05);
+      padding: 24px 20px 32px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.2s ease;
+    }
+
+    .bank-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .logo {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #1a3b5d, #2a5f8a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 2px 4px 12px rgba(26, 59, 93, 0.15);
+    }
+
+    .logo-sub {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #4a6479;
+      margin-left: 6px;
+      align-self: flex-end;
+      margin-bottom: 6px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 20px 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 18px rgba(0, 20, 40, 0.06);
+      border: 1px solid #ffffff80;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1e3b5c;
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #2c4b6e;
+      margin-bottom: 12px;
+    }
+
+    .balance-display {
+      background: linear-gradient(115deg, #1e3b5c 0%, #2b5a7a 100%);
+      border-radius: 20px;
+      padding: 20px 18px;
+      color: white;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 18px -8px rgba(26, 59, 93, 0.3);
+    }
+
+    .balance-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .balance-amount {
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-top: 6px;
+      word-break: break-word;
+    }
+
+    .currency {
+      font-size: 1.3rem;
+      font-weight: 400;
+      opacity: 0.9;
+      margin-left: 4px;
+    }
+
+    .user-greeting {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      background: white;
+      border: none;
+      border-radius: 60px;
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1e3b5c;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid #dbe4ec;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: #1e3b5c;
+      color: white;
+      border: none;
+      box-shadow: 0 8px 16px rgba(26, 59, 93, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: #2b5a7a;
+      transform: scale(1.01);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #b6ccda;
+    }
+
+    .btn-danger {
+      color: #b13e3e;
+      border-color: #f3d7d7;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #2c4b6e;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1rem;
+      border: 1.5px solid #d7e0e8;
+      border-radius: 18px;
+      background: white;
+      transition: border 0.15s;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #1e3b5c;
+      box-shadow: 0 0 0 3px rgba(30, 59, 92, 0.1);
+    }
+
+    .users-hint {
+      background: #f0f7ff;
+      border-radius: 16px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border: 1px dashed #2a5f8a;
+    }
+
+    .users-hint-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1e3b5c;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .users-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .user-badge {
+      background: white;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      color: #1e3b5c;
+      border: 1px solid #b8d0e0;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-weight: 500;
+    }
+
+    .user-badge:hover {
+      background: #1e3b5c;
+      color: white;
+      border-color: #1e3b5c;
+    }
+
+    .user-badge.current {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #e0e8f0;
+    }
+
+    .user-badge.current:hover {
+      background: #e0e8f0;
+      color: #1e3b5c;
+    }
+
+    .transaction-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      border-bottom: 2px solid #e2eaf1;
+      padding-bottom: 8px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 16px;
+      font-weight: 600;
+      color: #5f7d99;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tab-btn.active {
+      background: #1e3b5c;
+      color: white;
+    }
+
+    .history-list {
+      max-height: 220px;
+      overflow-y: auto;
+      margin-top: 12px;
+      padding-right: 4px;
+    }
+
+    .history-item {
+      background: #f8fbfe;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      border-left: 4px solid;
+      font-size: 0.9rem;
+    }
+
+    .history-item.credit {
+      border-left-color: #2a9d8f;
+    }
+
+    .history-item.debit {
+      border-left-color: #e76f51;
+    }
+
+    .history-amount {
+      font-weight: 700;
+    }
+
+    .error-message {
+      color: #c13b3b;
+      font-size: 0.85rem;
+      margin-top: 6px;
+      min-height: 20px;
+    }
+
+    .success-message {
+      color: #1f7a5c;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #6f8aa3;
+      margin-top: 18px;
+    }
+
+    .flex-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: #5f7d99;
+      margin-top: 4px;
+    }
+
+    .refresh-hint {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 4px;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      color: #2a5f8a;
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 4px 8px;
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <div class="bank-header">
+    <span class="logo">Logo</span>
+    <span class="logo-sub">банк</span>
+  </div>
+
+  <!-- Блок авторизации -->
+  <div id="authSection">
+    <div class="card">
+      <h2>Вход в систему</h2>
+      <div class="form-group">
+        <label>Логин</label>
+        <input type="text" id="loginUsername" placeholder="Введите логин" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <div class="error-message" id="loginError"></div>
+      <button class="btn btn-primary btn-block" id="loginBtn">Войти</button>
+      <div style="margin-top: 20px; text-align: center;">
+        <span style="color: #4a6479;">Нет аккаунта?</span>
+        <button class="btn btn-outline" id="showRegisterBtn" style="margin-left: 8px;">Зарегистрироваться</button>
+      </div>
+      <div class="small-note" style="margin-top: 16px; text-align: center;">
+        💡 Демо: логин <strong>demo</strong>, пароль <strong>demo</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Блок регистрации -->
+  <div id="registerSection" class="hidden">
+    <div class="card">
+      <h2>Регистрация</h2>
+      <div class="form-group">
+        <label>Придумайте логин</label>
+        <input type="text" id="regUsername" placeholder="Логин">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" id="regPassword" placeholder="Минимум 4 символа">
+      </div>
+      <div class="form-group">
+        <label>Подтверждение пароля</label>
+        <input type="password" id="regPasswordConfirm" placeholder="Повторите пароль">
+      </div>
+      <div class="error-message" id="regError"></div>
+      <div class="success-message" id="regSuccess"></div>
+      <button class="btn btn-primary btn-block" id="registerBtn">Создать аккаунт</button>
+      <button class="btn btn-outline btn-block" id="backToLoginBtn" style="margin-top: 10px;">← Назад ко входу</button>
+    </div>
+  </div>
+
+  <!-- Основной дашборд -->
+  <div id="dashboardSection" class="hidden">
+    <div class="user-greeting">
+      <h2>👤 <span id="displayUsername"></span></h2>
+      <button class="btn btn-outline btn-danger" id="logoutBtn">Выйти</button>
+    </div>
+
+    <!-- Карточка баланса -->
+    <div class="balance-display">
+      <div class="balance-label">Текущий баланс</div>
+      <div class="balance-amount">
+        <span id="balanceValue">0</span><span class="currency">₽</span>
+      </div>
+    </div>
+
+    <!-- Табы операций -->
+    <div class="transaction-tabs">
+      <button class="tab-btn active" data-tab="transfer">💸 Перевод</button>
+      <button class="tab-btn" data-tab="deposit">⬆️ Пополнить</button>
+      <button class="tab-btn" data-tab="payment">🛒 Оплата</button>
+    </div>
+
+    <!-- Форма перевода -->
+    <div id="transferPanel" class="card">
+      <h3>Перевод клиенту Logo</h3>
+      
+      <!-- Подсказка с пользователями -->
+      <div class="users-hint" id="usersHint">
+        <div class="users-hint-title">
+          <span>👥 Доступные получатели:</span>
+          <button class="icon-btn" id="refreshUsersBtn" title="Обновить список">🔄</button>
+        </div>
+        <div class="users-list" id="usersList">
+          <span style="color:#6f8aa3;">Загрузка...</span>
+        </div>
+        <div class="small-note" style="margin-top: 8px;">Нажмите на имя для быстрого заполнения</div>
+      </div>
+
+      <div class="form-group">
+        <label>Получатель (логин)</label>
+        <input type="text" id="transferRecipient" placeholder="Введите логин">
+      </div>
+      <div class="form-group">
+        <label>Сумма (₽)</label>
+        <input type="number" id="transferAmount" placeholder="0.00" min="0.01" step="0.01">
+      </div>
+      <div class="error-message" id="transferError"></div>
+      <button class="btn btn-primary btn-block" id="transferBtn">Отправить перевод</button>
+    </div>
+
+    <!-- Форма пополнения -->
+    <div id="depositPanel" class="card hidden">
+      <h3>Пополнение счёта</h3>
+      <div class="form-group">
+        <label>Сумма пополнения (₽)</label>
+        <input type="number" id="depositAmount" placeholder="0.00" min="0.01" step="0.01">
+      </div>
+      <div class="small-note">Мгновенное зачисление</div>
+      <div class="error-message" id="depositError"></div>
+      <button class="btn btn-primary btn-block" id="depositBtn">Пополнить</button>
+    </div>
+
+    <!-- Форма оплаты -->
+    <div id="paymentPanel" class="card hidden">
+      <h3>Оплата услуг</h3>
+      <div class="form-group">
+        <label>Назначение</label>
+        <input type="text" id="paymentDesc" placeholder="Например, интернет">
+      </div>
+      <div class="form-group">
+        <label>Сумма (₽)</label>
+        <input type="number" id="paymentAmount" placeholder="0.00" min="0.01" step="0.01">
+      </div>
+      <div class="error-message" id="paymentError"></div>
+      <button class="btn btn-primary btn-block" id="paymentBtn">Оплатить</button>
+    </div>
+
+    <!-- История операций -->
+    <div class="card" style="margin-top: 8px;">
+      <h3>📋 Последние операции</h3>
+      <div id="historyContainer" class="history-list">
+        <div style="color:#6f8aa3; text-align:center; padding:12px;">Пока нет операций</div>
+      </div>
+    </div>
+    <div class="footer-note">Logo Банк — данные хранятся локально</div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    // ---------- Хранилище ----------
+    const STORAGE_KEY = 'logo_bank_users';
+    const SESSION_KEY = 'logo_current_user';
+
+    function loadUsers() {
+      const data = localStorage.getItem(STORAGE_KEY);
+      if (data) {
+        try { return JSON.parse(data); } catch(e){ return {}; }
+      }
+      const demo = {
+        'demo': {
+          password: 'demo',
+          balance: 5000.00,
+          transactions: [
+            { type: 'deposit', amount: 5000, description: 'Начальное пополнение', date: new Date().toISOString(), counterparty: '' }
+          ]
+        }
+      };
+      saveUsers(demo);
+      return demo;
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+    }
+
+    let users = loadUsers();
+    let currentUser = sessionStorage.getItem(SESSION_KEY) || null;
+
+    // ---------- DOM элементы ----------
+    const authSection = document.getElementById('authSection');
+    const registerSection = document.getElementById('registerSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+
+    const loginUsername = document.getElementById('loginUsername');
+    const loginPassword = document.getElementById('loginPassword');
+    const loginError = document.getElementById('loginError');
+    const loginBtn = document.getElementById('loginBtn');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
+
+    const regUsername = document.getElementById('regUsername');
+    const regPassword = document.getElementById('regPassword');
+    const regPasswordConfirm = document.getElementById('regPasswordConfirm');
+    const regError = document.getElementById('regError');
+    const regSuccess = document.getElementById('regSuccess');
+    const registerBtn = document.getElementById('registerBtn');
+    const backToLoginBtn = document.getElementById('backToLoginBtn');
+
+    const displayUsername = document.getElementById('displayUsername');
+    const balanceValue = document.getElementById('balanceValue');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const transferPanel = document.getElementById('transferPanel');
+    const depositPanel = document.getElementById('depositPanel');
+    const paymentPanel = document.getElementById('paymentPanel');
+
+    const transferRecipient = document.getElementById('transferRecipient');
+    const transferAmount = document.getElementById('transferAmount');
+    const transferError = document.getElementById('transferError');
+    const transferBtn = document.getElementById('transferBtn');
+
+    const depositAmount = document.getElementById('depositAmount');
+    const depositError = document.getElementById('depositError');
+    const depositBtn = document.getElementById('depositBtn');
+
+    const paymentDesc = document.getElementById('paymentDesc');
+    const paymentAmount = document.getElementById('paymentAmount');
+    const paymentError = document.getElementById('paymentError');
+    const paymentBtn = document.getElementById('paymentBtn');
+
+    const historyContainer = document.getElementById('historyContainer');
+    const usersList = document.getElementById('usersList');
+    const refreshUsersBtn = document.getElementById('refreshUsersBtn');
+
+    // ---------- Функции ----------
+    function formatDate(isoString) {
+      const d = new Date(isoString);
+      return d.toLocaleString('ru-RU', { day:'2-digit', month:'2-digit', year:'2-digit', hour:'2-digit', minute:'2-digit' });
+    }
+
+    function updateUsersList() {
+      if (!usersList) return;
+      const allUsers = Object.keys(users);
+      if (allUsers.length === 0) {
+        usersList.innerHTML = '<span style="color:#6f8aa3;">Нет пользователей</span>';
+        return;
+      }
+      
+      usersList.innerHTML = allUsers.map(username => {
+        const isCurrent = (username === currentUser);
+        return `<span class="user-badge ${isCurrent ? 'current' : ''}" data-username="${username}" ${isCurrent ? 'title="Это вы"' : ''}>${username}</span>`;
+      }).join('');
+      
+      // Добавляем обработчики клика
+      document.querySelectorAll('.user-badge').forEach(badge => {
+        badge.addEventListener('click', () => {
+          const username = badge.dataset.username;
+          if (username && username !== currentUser) {
+            transferRecipient.value = username;
+            // Небольшая анимация
+            badge.style.transform = 'scale(0.95)';
+            setTimeout(() => badge.style.transform = '', 150);
+          }
+        });
+      });
+    }
+
+    function updateDashboardUI() {
+      if (!currentUser || !users[currentUser]) return;
+      const userData = users[currentUser];
+      displayUsername.textContent = currentUser;
+      balanceValue.textContent = userData.balance.toFixed(2);
+      renderHistory(userData.transactions || []);
+      updateUsersList();
+    }
+
+    function renderHistory(transactions) {
+      if (!transactions || transactions.length === 0) {
+        historyContainer.innerHTML = '<div style="color:#6f8aa3; text-align:center; padding:12px;">Пока нет операций</div>';
+        return;
+      }
+      const recent = [...transactions].reverse().slice(0, 7);
+      historyContainer.innerHTML = recent.map(tx => {
+        let sign = '';
+        let amountClass = 'debit';
+        let displayAmount = tx.amount.toFixed(2);
+        
+        if (tx.type === 'transfer') {
+          if (tx.from === currentUser) {
+            sign = '-';
+            amountClass = 'debit';
+          } else if (tx.to === currentUser) {
+            sign = '+';
+            amountClass = 'credit';
+          }
+        } else if (tx.type === 'deposit') {
+          sign = '+';
+          amountClass = 'credit';
+        } else if (tx.type === 'payment') {
+          sign = '-';
+          amountClass = 'debit';
+        }
+
+        let desc = tx.description || '';
+        if (tx.type === 'transfer') {
+          if (tx.from === currentUser) desc = `Перевод для ${tx.to}`;
+          else desc = `Поступление от ${tx.from}`;
+        }
+        return `
+          <div class="history-item ${amountClass}">
+            <div>
+              <strong>${desc || tx.type}</strong><br>
+              <small>${formatDate(tx.date)}</small>
+            </div>
+            <div class="history-amount">${sign}${displayAmount} ₽</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function saveCurrentUserData(userData) {
+      if (!currentUser) return;
+      users[currentUser] = userData;
+      saveUsers(users);
+      updateDashboardUI();
+    }
+
+    function addTransaction(user, tx) {
+      if (!users[user]) return;
+      if (!users[user].transactions) users[user].transactions = [];
+      users[user].transactions.push(tx);
+    }
+
+    function checkAuthAndDisplay() {
+      if (currentUser && users[currentUser]) {
+        authSection.classList.add('hidden');
+        registerSection.classList.add('hidden');
+        dashboardSection.classList.remove('hidden');
+        updateDashboardUI();
+      } else {
+        authSection.classList.remove('hidden');
+        registerSection.classList.add('hidden');
+        dashboardSection.classList.add('hidden');
+        currentUser = null;
+        sessionStorage.removeItem(SESSION_KEY);
+      }
+    }
+
+    function clearInputs() {
+      loginUsername.value = '';
+      loginPassword.value = '';
+      loginError.textContent = '';
+      regUsername.value = '';
+      regPassword.value = '';
+      regPasswordConfirm.value = '';
+      regError.textContent = '';
+      regSuccess.textContent = '';
+    }
+
+    // ---------- Обработчики ----------
+    loginBtn.addEventListener('click', () => {
+      const username = loginUsername.value.trim();
+      const password = loginPassword.value;
+      if (!username || !password) {
+        loginError.textContent = 'Введите логин и пароль';
+        return;
+      }
+      const user = users[username];
+      if (!user) {
+        loginError.textContent = 'Пользователь не найден';
+        return;
+      }
+      if (user.password !== password) {
+        loginError.textContent = 'Неверный пароль';
+        return;
+      }
+      currentUser = username;
+      sessionStorage.setItem(SESSION_KEY, currentUser);
+      clearInputs();
+      checkAuthAndDisplay();
+    });
+
+    showRegisterBtn.addEventListener('click', () => {
+      authSection.classList.add('hidden');
+      registerSection.classList.remove('hidden');
+      clearInputs();
+    });
+
+    backToLoginBtn.addEventListener('click', () => {
+      registerSection.classList.add('hidden');
+      authSection.classList.remove('hidden');
+      clearInputs();
+    });
+
+    registerBtn.addEventListener('click', () => {
+      const username = regUsername.value.trim();
+      const pass = regPassword.value;
+      const passConfirm = regPasswordConfirm.value;
+
+      regError.textContent = '';
+      regSuccess.textContent = '';
+
+      if (!username || !pass) {
+        regError.textContent = 'Заполните все поля';
+        return;
+      }
+      if (username.length < 3) {
+        regError.textContent = 'Логин должен быть не менее 3 символов';
+        return;
+      }
+      if (pass.length < 4) {
+        regError.textContent = 'Пароль должен быть не менее 4 символов';
+        return;
+      }
+      if (pass !== passConfirm) {
+        regError.textContent = 'Пароли не совпадают';
+        return;
+      }
+      if (users[username]) {
+        regError.textContent = 'Пользователь с таким логином уже существует';
+        return;
+      }
+
+      users[username] = {
+        password: pass,
+        balance: 0.00,
+        transactions: []
+      };
+      saveUsers(users);
+      regSuccess.textContent = 'Аккаунт создан! Теперь войдите.';
+      regUsername.value = '';
+      regPassword.value = '';
+      regPasswordConfirm.value = '';
+      setTimeout(() => {
+        registerSection.classList.add('hidden');
+        authSection.classList.remove('hidden');
+        clearInputs();
+      }, 1500);
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      currentUser = null;
+      sessionStorage.removeItem(SESSION_KEY);
+      checkAuthAndDisplay();
+      clearInputs();
+    });
+
+    // Обновление списка пользователей
+    refreshUsersBtn.addEventListener('click', () => {
+      users = loadUsers();
+      updateUsersList();
+    });
+
+    // Табы
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.dataset.tab;
+        transferPanel.classList.add('hidden');
+        depositPanel.classList.add('hidden');
+        paymentPanel.classList.add('hidden');
+        if (tab === 'transfer') {
+          transferPanel.classList.remove('hidden');
+          updateUsersList();
+        } else if (tab === 'deposit') depositPanel.classList.remove('hidden');
+        else if (tab === 'payment') paymentPanel.classList.remove('hidden');
+        transferError.textContent = '';
+        depositError.textContent = '';
+        paymentError.textContent = '';
+      });
+    });
+
+    // Перевод
+    transferBtn.addEventListener('click', () => {
+      if (!currentUser) return;
+      const recipient = transferRecipient.value.trim();
+      const amount = parseFloat(transferAmount.value);
+      
+      transferError.textContent = '';
+      if (!recipient) {
+        transferError.textContent = 'Укажите получателя';
+        return;
+      }
+      if (isNaN(amount) || amount <= 0) {
+        transferError.textContent = 'Введите корректную сумму';
+        return;
+      }
+      if (recipient === currentUser) {
+        transferError.textContent = 'Нельзя перевести самому себе';
+        return;
+      }
+      const senderData = users[currentUser];
+      if (senderData.balance < amount) {
+        transferError.textContent = 'Недостаточно средств';
+        return;
+      }
+      if (!users[recipient]) {
+        transferError.textContent = 'Пользователь не найден. Попросите друга зарегистрироваться!';
+        return;
+      }
+
+      senderData.balance -= amount;
+      users[recipient].balance += amount;
+
+      const txDate = new Date().toISOString();
+      addTransaction(currentUser, {
+        type: 'transfer',
+        amount: amount,
+        from: currentUser,
+        to: recipient,
+        description: `Перевод для ${recipient}`,
+        date: txDate
+      });
+      addTransaction(recipient, {
+        type: 'transfer',
+        amount: amount,
+        from: currentUser,
+        to: recipient,
+        description: `Поступление от ${currentUser}`,
+        date: txDate
+      });
+
+      saveUsers(users);
+      updateDashboardUI();
+      transferRecipient.value = '';
+      transferAmount.value = '';
+      transferError.textContent = '';
+      
+      const successMsg = document.createElement('div');
+      successMsg.className = 'success-message';
+      successMsg.textContent = `✅ Перевод ${amount.toFixed(2)} ₽ для ${recipient} выполнен!`;
+      transferPanel.appendChild(successMsg);
+      setTimeout(() => successMsg.remove(), 3000);
+    });
+
+    // Пополнение
+    depositBtn.addEventListener('click', () => {
+      if (!currentUser) return;
+      const amount = parseFloat(depositAmount.value);
+      depositError.textContent = '';
+      if (isNaN(amount) || amount <= 0) {
+        depositError.textContent = 'Введите положительную сумму';
+        return;
+      }
+      const userData = users[currentUser];
+      userData.balance += amount;
+      addTransaction(currentUser, {
+        type: 'deposit',
+        amount: amount,
+        description: 'Пополнение счёта',
+        date: new Date().toISOString()
+      });
+      saveUsers(users);
+      updateDashboardUI();
+      depositAmount.value = '';
+      const msg = document.createElement('div');
+      msg.className = 'success-message';
+      msg.textContent = `✅ Счёт пополнен на ${amount.toFixed(2)} ₽`;
+      depositPanel.appendChild(msg);
+      setTimeout(() => msg.remove(), 2000);
+    });
+
+    // Оплата
+    paymentBtn.addEventListener('click', () => {
+      if (!currentUser) return;
+      const desc = paymentDesc.value.trim();
+      const amount = parseFloat(paymentAmount.value);
+      paymentError.textContent = '';
+      if (!desc) {
+        paymentError.textContent = 'Укажите назначение платежа';
+        return;
+      }
+      if (isNaN(amount) || amount <= 0) {
+        paymentError.textContent = 'Введите корректную сумму';
+        return;
+      }
+      const userData = users[currentUser];
+      if (userData.balance < amount) {
+        paymentError.textContent = 'Недостаточно средств';
+        return;
+      }
+      userData.balance -= amount;
+      addTransaction(currentUser, {
+        type: 'payment',
+        amount: amount,
+        description: desc,
+        date: new Date().toISOString()
+      });
+      saveUsers(users);
+      updateDashboardUI();
+      paymentDesc.value = '';
+      paymentAmount.value = '';
+      const msg = document.createElement('div');
+      msg.className = 'success-message';
+      msg.textContent = `✅ Оплата "${desc}" выполнена`;
+      paymentPanel.appendChild(msg);
+      setTimeout(() => msg.remove(), 2000);
+    });
+
+    // Enter для входа
+    [loginUsername, loginPassword].forEach(f => f.addEventListener('keypress', (e) => {
+      if(e.key === 'Enter') loginBtn.click();
+    }));
+
+    // Инициализация
+    checkAuthAndDisplay();
+  })();
+</script>
+</body>
+</html>
