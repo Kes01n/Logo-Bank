@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Logo Банк — с облачной синхронизацией</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f0f5fa 0%, #e6edf4 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 32px;
+      box-shadow: 0 20px 40px rgba(0, 15, 30, 0.15);
+      padding: 24px 20px 32px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .bank-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .logo-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1a3b5d, #2a5f8a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .sync-status {
+      font-size: 0.8rem;
+      color: #2a9d8f;
+      background: #e8f5f2;
+      padding: 6px 12px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 20px 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 18px rgba(0, 20, 40, 0.06);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1e3b5c;
+      margin-bottom: 18px;
+    }
+
+    .balance-display {
+      background: linear-gradient(115deg, #1e3b5c 0%, #2b5a7a 100%);
+      border-radius: 20px;
+      padding: 20px 18px;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .balance-amount {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    .card-item {
+      background: #f8fbfe;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid #dbe4ec;
+    }
+
+    .card-number {
+      font-family: monospace;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      margin: 8px 0;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 60px;
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-primary {
+      background: #1e3b5c;
+      color: white;
+      width: 100%;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #b6ccda;
+      color: #1e3b5c;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #2c4b6e;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1rem;
+      border: 1.5px solid #d7e0e8;
+      border-radius: 18px;
+      background: white;
+      outline: none;
+    }
+
+    .users-hint {
+      background: #f0f7ff;
+      border-radius: 16px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+    }
+
+    .users-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .user-badge {
+      background: white;
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid #b8d0e0;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .transaction-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      border-bottom: 2px solid #e2eaf1;
+      padding-bottom: 8px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 16px;
+      font-weight: 600;
+      color: #5f7d99;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: #1e3b5c;
+      color: white;
+    }
+
+    .error-message {
+      color: #c13b3b;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+
+    .success-message {
+      color: #1f7a5c;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 32px;
+      padding: 24px;
+      max-width: 400px;
+      width: 90%;
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <div class="bank-header">
+    <div class="logo-wrapper">
+      <span class="logo">Logo</span>
+      <span style="color:#4a6479; margin-left:6px;">банк</span>
+    </div>
+    <div class="sync-status" id="syncStatus">
+      <span>🔄</span> Локально
+    </div>
+  </div>
+
+  <!-- Авторизация -->
+  <div id="authSection">
+    <div class="card">
+      <h2>Вход в Logo Банк</h2>
+      <div class="form-group">
+        <label>Логин</label>
+        <input type="text" id="loginUsername" placeholder="Введите логин">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" id="loginPassword" placeholder="••••••••">
+      </div>
+      <div class="error-message" id="loginError"></div>
+      <button class="btn btn-primary" id="loginBtn">Войти</button>
+      <div style="margin-top: 20px; text-align: center;">
+        <button class="btn btn-outline" id="showRegisterBtn">Создать аккаунт</button>
+      </div>
+      <div style="margin-top: 16px; text-align: center; font-size:0.9rem;">
+        💡 Демо: demo / demo
+      </div>
+    </div>
+  </div>
+
+  <!-- Регистрация -->
+  <div id="registerSection" class="hidden">
+    <div class="card">
+      <h2>Регистрация</h2>
+      <div class="form-group">
+        <label>Логин</label>
+        <input type="text" id="regUsername" placeholder="Минимум 3 символа">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" id="regPassword" placeholder="Минимум 4 символа">
+      </div>
+      <div class="form-group">
+        <label>Повторите пароль</label>
+        <input type="password" id="regPasswordConfirm" placeholder="••••••••">
+      </div>
+      <div class="error-message" id="regError"></div>
+      <button class="btn btn-primary" id="registerBtn">Зарегистрироваться</button>
+      <button class="btn btn-outline" id="backToLoginBtn" style="margin-top:10px;">← Назад</button>
+    </div>
+  </div>
+
+  <!-- Дашборд -->
+  <div id="dashboardSection" class="hidden">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h2>👤 <span id="displayUsername"></span></h2>
+      <button class="btn btn-outline" id="logoutBtn" style="width:auto;">Выйти</button>
+    </div>
+
+    <!-- Мои карты -->
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3>💳 Мои карты</h3>
+        <button class="btn btn-outline" id="addCardBtn" style="width:auto; padding:8px 16px;">+ Добавить</button>
+      </div>
+      <div id="cardsList"></div>
+    </div>
+
+    <!-- Баланс -->
+    <div class="balance-display">
+      <div>Текущий баланс</div>
+      <div class="balance-amount">
+        <span id="balanceValue">0</span><span> ₽</span>
+      </div>
+    </div>
+
+    <!-- Табы -->
+    <div class="transaction-tabs">
+      <button class="tab-btn active" data-tab="transfer">💸 Перевод</button>
+      <button class="tab-btn" data-tab="deposit">⬆️ Пополнить</button>
+      <button class="tab-btn" data-tab="payment">🛒 Оплата</button>
+    </div>
+
+    <!-- Перевод -->
+    <div id="transferPanel" class="card">
+      <h3>Перевод клиенту</h3>
+      
+      <!-- Список пользователей ОНЛАЙН -->
+      <div class="users-hint">
+        <div style="display:flex; justify-content:space-between;">
+          <strong>👥 Доступные получатели:</strong>
+          <button class="btn-outline" id="refreshUsersBtn" style="padding:4px 12px;">🔄 Обновить</button>
+        </div>
+        <div class="users-list" id="usersList"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Получатель</label>
+        <input type="text" id="transferRecipient" placeholder="Логин получателя">
+      </div>
+      <div class="form-group">
+        <label>Сумма (₽)</label>
+        <input type="number" id="transferAmount" placeholder="0.00" min="0.01" step="0.01">
+      </div>
+      <div class="error-message" id="transferError"></div>
+      <button class="btn btn-primary" id="transferBtn">Отправить</button>
+    </div>
+
+    <!-- Пополнение -->
+    <div id="depositPanel" class="card hidden">
+      <h3>Пополнение с карты</h3>
+      <div class="form-group">
+        <label>Выберите карту</label>
+        <select id="depositCardSelect"></select>
+      </div>
+      <div class="form-group">
+        <label>Сумма (₽)</label>
+        <input type="number" id="depositAmount" placeholder="0.00" min="0.01">
+      </div>
+      <button class="btn btn-primary" id="depositBtn">Пополнить</button>
+    </div>
+
+    <!-- Оплата -->
+    <div id="paymentPanel" class="card hidden">
+      <h3>Оплата услуг</h3>
+      <div class="form-group">
+        <label>Назначение</label>
+        <input type="text" id="paymentDesc" placeholder="Например, интернет">
+      </div>
+      <div class="form-group">
+        <label>Сумма (₽)</label>
+        <input type="number" id="paymentAmount" placeholder="0.00">
+      </div>
+      <button class="btn btn-primary" id="paymentBtn">Оплатить</button>
+    </div>
+
+    <!-- История -->
+    <div class="card">
+      <h3>📋 Операции</h3>
+      <div id="historyContainer" style="max-height:200px; overflow-y:auto;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно добавления карты -->
+<div id="addCardModal" class="modal hidden">
+  <div class="modal-content">
+    <h3>Добавить карту</h3>
+    <div class="form-group">
+      <label>Номер карты</label>
+      <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19">
+    </div>
+    <div class="form-group">
+      <label>Имя владельца</label>
+      <input type="text" id="cardHolder" placeholder="IVAN IVANOV">
+    </div>
+    <div style="display:flex; gap:10px;">
+      <div class="form-group" style="flex:1;">
+        <label>Месяц</label>
+        <input type="text" id="cardMonth" placeholder="MM" maxlength="2">
+      </div>
+      <div class="form-group" style="flex:1;">
+        <label>Год</label>
+        <input type="text" id="cardYear" placeholder="YY" maxlength="2">
+      </div>
+      <div class="form-group" style="flex:1;">
+        <label>CVV</label>
+        <input type="text" id="cardCVV" placeholder="***" maxlength="3">
+      </div>
+    </div>
+    <div class="error-message" id="cardError"></div>
+    <button class="btn btn-primary" id="saveCardBtn">Сохранить карту</button>
+    <button class="btn btn-outline" id="closeModalBtn" style="margin-top:10px;">Отмена</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+<script>
+  // Firebase конфигурация (БЕСПЛАТНАЯ БАЗА ДАННЫХ)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBm7W8LJkQZ3KpVxYR5NcL6mH9tF2sD4jA",
+    authDomain: "logo-bank-demo.firebaseapp.com",
+    databaseURL: "https://logo-bank-demo-default-rtdb.firebaseio.com",
+    projectId: "logo-bank-demo",
+    storageBucket: "logo-bank-demo.appspot.com",
+    messagingSenderId: "123456789012",
+    appId: "1:123456789012:web:abc123def456"
+  };
+
+  // Инициализация Firebase
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  
+  let currentUser = null;
+  let users = {};
+
+  // Синхронизация с облаком
+  function syncWithCloud() {
+    document.getElementById('syncStatus').innerHTML = '<span>☁️</span> Синхронизация...';
+    
+    database.ref('users').on('value', (snapshot) => {
+      const cloudUsers = snapshot.val() || {};
+      users = cloudUsers;
+      
+      // Если нет demo пользователя, создаём
+      if (!users['demo']) {
+        users['demo'] = {
+          password: 'demo',
+          balance: 5000,
+          cards: [],
+          transactions: []
+        };
+        database.ref('users/demo').set(users['demo']);
+      }
+      
+      document.getElementById('syncStatus').innerHTML = '<span>✅</span> Онлайн';
+      if (currentUser) updateDashboardUI();
+      updateUsersList();
+    });
+  }
+
+  // Сохранение в облако
+  function saveToCloud() {
+    if (currentUser && users[currentUser]) {
+      database.ref('users/' + currentUser).set(users[currentUser]);
+    }
+  }
+
+  // Обновление списка пользователей
+  function updateUsersList() {
+    const list = document.getElementById('usersList');
+    if (!list) return;
+    
+    const allUsers = Object.keys(users).filter(u => u !== currentUser);
+    if (allUsers.length === 0) {
+      list.innerHTML = '<span style="color:#6f8aa3;">Нет других пользователей</span>';
+      return;
+    }
+    
+    list.innerHTML = allUsers.map(u => 
+      `<span class="user-badge" onclick="document.getElementById('transferRecipient').value='${u}'">${u}</span>`
+    ).join('');
+  }
+
+  // Отображение карт
+  function renderCards() {
+    if (!currentUser) return;
+    const userCards = users[currentUser].cards || [];
+    const container = document.getElementById('cardsList');
+    const select = document.getElementById('depositCardSelect');
+    
+    if (userCards.length === 0) {
+      container.innerHTML = '<p style="color:#6f8aa3; padding:12px;">Нет привязанных карт</p>';
+      select.innerHTML = '<option>Нет карт</option>';
+      return;
+    }
+    
+    container.innerHTML = userCards.map((card, i) => `
+      <div class="card-item">
+        <div>💳 ${card.bank || 'VISA'}</div>
+        <div class="card-number">**** **** **** ${card.number.slice(-4)}</div>
+        <div>${card.holder}</div>
+        <button onclick="deleteCard(${i})" style="margin-top:8px; color:#c13b3b;">Удалить</button>
+      </div>
+    `).join('');
+    
+    select.innerHTML = userCards.map((card, i) => 
+      `<option value="${i}">**** ${card.number.slice(-4)} (${card.holder})</option>`
+    ).join('');
+  }
+
+  function deleteCard(index) {
+    users[currentUser].cards.splice(index, 1);
+    saveToCloud();
+    renderCards();
+  }
+
+  // Обновление интерфейса
+  function updateDashboardUI() {
+    if (!currentUser) return;
+    const user = users[currentUser];
+    document.getElementById('displayUsername').textContent = currentUser;
+    document.getElementById('balanceValue').textContent = user.balance.toFixed(2);
+    renderCards();
+    renderHistory();
+  }
+
+  function renderHistory() {
+    const tx = users[currentUser].transactions || [];
+    const container = document.getElementById('historyContainer');
+    if (tx.length === 0) {
+      container.innerHTML = '<p style="color:#6f8aa3;">Нет операций</p>';
+      return;
+    }
+    
+    container.innerHTML = tx.slice(-7).reverse().map(t => {
+      const sign = t.type === 'deposit' || t.to === currentUser ? '+' : '-';
+      const color = sign === '+' ? '#2a9d8f' : '#e76f51';
+      return `
+        <div style="padding:12px; border-left:3px solid ${color}; margin-bottom:8px; background:#f8fbfe;">
+          <div style="display:flex; justify-content:space-between;">
+            <strong>${t.description || t.type}</strong>
+            <span style="color:${color};">${sign}${t.amount.toFixed(2)} ₽</span>
+          </div>
+          <small>${new Date(t.date).toLocaleString()}</small>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Инициализация
+  syncWithCloud();
+
+  // Обработчики событий
+  document.getElementById('loginBtn').addEventListener('click', () => {
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    
+    if (users[username] && users[username].password === password) {
+      currentUser = username;
+      document.getElementById('authSection').classList.add('hidden');
+      document.getElementById('dashboardSection').classList.remove('hidden');
+      updateDashboardUI();
+      updateUsersList();
+    } else {
+      document.getElementById('loginError').textContent = 'Неверный логин или пароль';
+    }
+  });
+
+  document.getElementById('showRegisterBtn').addEventListener('click', () => {
+    document.getElementById('authSection').classList.add('hidden');
+    document.getElementById('registerSection').classList.remove('hidden');
+  });
+
+  document.getElementById('backToLoginBtn').addEventListener('click', () => {
+    document.getElementById('registerSection').classList.add('hidden');
+    document.getElementById('authSection').classList.remove('hidden');
+  });
+
+  document.getElementById('registerBtn').addEventListener('click', () => {
+    const username = document.getElementById('regUsername').value.trim();
+    const pass = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regPasswordConfirm').value;
+    
+    if (username.length < 3) {
+      document.getElementById('regError').textContent = 'Логин минимум 3 символа';
+      return;
+    }
+    if (pass.length < 4) {
+      document.getElementById('regError').textContent = 'Пароль минимум 4 символа';
+      return;
+    }
+    if (pass !== confirm) {
+      document.getElementById('regError').textContent = 'Пароли не совпадают';
+      return;
+    }
+    if (users[username]) {
+      document.getElementById('regError').textContent = 'Пользователь уже существует';
+      return;
+    }
+    
+    users[username] = {
+      password: pass,
+      balance: 0,
+      cards: [],
+      transactions: []
+    };
+    
+    database.ref('users/' + username).set(users[username]);
+    alert('✅ Регистрация успешна! Теперь войдите.');
+    document.getElementById('registerSection').classList.add('hidden');
+    document.getElementById('authSection').classList.remove('hidden');
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    currentUser = null;
+    document.getElementById('dashboardSection').classList.add('hidden');
+    document.getElementById('authSection').classList.remove('hidden');
+  });
+
+  // Перевод
+  document.getElementById('transferBtn').addEventListener('click', () => {
+    const recipient = document.getElementById('transferRecipient').value.trim();
+    const amount = parseFloat(document.getElementById('transferAmount').value);
+    
+    if (!recipient || !amount || amount <= 0) {
+      document.getElementById('transferError').textContent = 'Проверьте данные';
+      return;
+    }
+    if (!users[recipient]) {
+      document.getElementById('transferError').textContent = 'Получатель не найден в облаке';
+      return;
+    }
+    if (users[currentUser].balance < amount) {
+      document.getElementById('transferError').textContent = 'Недостаточно средств';
+      return;
+    }
+    
+    // Выполняем перевод
+    users[currentUser].balance -= amount;
+    users[recipient].balance += amount;
+    
+    const tx = {
+      type: 'transfer',
+      amount: amount,
+      from: currentUser,
+      to: recipient,
+      description: `Перевод пользователю ${recipient}`,
+      date: new Date().toISOString()
+    };
+    
+    users[currentUser].transactions.push(tx);
+    users[recipient].transactions.push({...tx, description: `Поступление от ${currentUser}`});
+    
+    database.ref('users').set(users);
+    updateDashboardUI();
+    document.getElementById('transferAmount').value = '';
+    document.getElementById('transferRecipient').value = '';
+    alert('✅ Перевод выполнен!');
+  });
+
+  // Добавление карты
+  document.getElementById('addCardBtn').addEventListener('click', () => {
+    document.getElementById('addCardModal').classList.remove('hidden');
+  });
+
+  document.getElementById('closeModalBtn').addEventListener('click', () => {
+    document.getElementById('addCardModal').classList.add('hidden');
+  });
+
+  document.getElementById('saveCardBtn').addEventListener('click', () => {
+    const number = document.getElementById('cardNumber').value.replace(/\s/g, '');
+    const holder = document.getElementById('cardHolder').value;
+    const month = document.getElementById('cardMonth').value;
+    const year = document.getElementById('cardYear').value;
+    const cvv = document.getElementById('cardCVV').value;
+    
+    if (!number || number.length !== 16) {
+      document.getElementById('cardError').textContent = 'Неверный номер карты';
+      return;
+    }
+    
+    if (!users[currentUser].cards) users[currentUser].cards = [];
+    users[currentUser].cards.push({
+      number: number,
+      holder: holder,
+      expiry: `${month}/${year}`,
+      bank: number.startsWith('4') ? 'VISA' : 'MasterCard'
+    });
+    
+    saveToCloud();
+    renderCards();
+    document.getElementById('addCardModal').classList.add('hidden');
+    alert('✅ Карта добавлена!');
+  });
+
+  // Пополнение
+  document.getElementById('depositBtn').addEventListener('click', () => {
+    const cardIndex = document.getElementById('depositCardSelect').value;
+    const amount = parseFloat(document.getElementById('depositAmount').value);
+    
+    if (!amount || amount <= 0) return;
+    
+    users[currentUser].balance += amount;
+    users[currentUser].transactions.push({
+      type: 'deposit',
+      amount: amount,
+      description: 'Пополнение с карты',
+      date: new Date().toISOString()
+    });
+    
+    saveToCloud();
+    updateDashboardUI();
+    document.getElementById('depositAmount').value = '';
+    alert('✅ Баланс пополнен!');
+  });
+
+  // Оплата
+  document.getElementById('paymentBtn').addEventListener('click', () => {
+    const desc = document.getElementById('paymentDesc').value;
+    const amount = parseFloat(document.getElementById('paymentAmount').value);
+    
+    if (!desc || !amount || amount <= 0) return;
+    if (users[currentUser].balance < amount) {
+      alert('Недостаточно средств');
+      return;
+    }
+    
+    users[currentUser].balance -= amount;
+    users[currentUser].transactions.push({
+      type: 'payment',
+      amount: amount,
+      description: desc,
+      date: new Date().toISOString()
+    });
+    
+    saveToCloud();
+    updateDashboardUI();
+    document.getElementById('paymentAmount').value = '';
+    document.getElementById('paymentDesc').value = '';
+    alert('✅ Оплата выполнена!');
+  });
+
+  // Табы
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const tab = btn.dataset.tab;
+      document.getElementById('transferPanel').classList.add('hidden');
+      document.getElementById('depositPanel').classList.add('hidden');
+      document.getElementById('paymentPanel').classList.add('hidden');
+      
+      if (tab === 'transfer') document.getElementById('transferPanel').classList.remove('hidden');
+      if (tab === 'deposit') document.getElementById('depositPanel').classList.remove('hidden');
+      if (tab === 'payment') document.getElementById('paymentPanel').classList.remove('hidden');
+    });
+  });
+
+  // Обновление списка
+  document.getElementById('refreshUsersBtn').addEventListener('click', () => {
+    syncWithCloud();
+  });
+
+  // Форматирование карты
+  document.getElementById('cardNumber').addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\s/g, '');
+    if (value.length > 16) value = value.slice(0, 16);
+    e.target.value = value.replace(/(.{4})/g, '$1 ').trim();
+  });
+</script>
+</body>
+</html>
