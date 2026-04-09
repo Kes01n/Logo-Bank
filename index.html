@@ -3,97 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logo Банк — Перевод по коду</title>
+  <title>Logo Банк — Простая версия</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
     body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f0f5fa;
+      margin: 0;
+      padding: 16px;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 12px;
     }
 
-    .app {
-      width: 100%;
-      max-width: 450px;
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
       background: white;
       border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      padding: 20px 16px 24px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
-    .logo {
-      font-size: 2rem;
-      font-weight: 700;
+    h1 {
       color: #1e3b5c;
-      margin-bottom: 20px;
       text-align: center;
-    }
-
-    .card {
-      background: #f8fbfe;
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
+      margin: 0 0 20px 0;
     }
 
     h2 {
-      font-size: 1.2rem;
       color: #1e3b5c;
-      margin-bottom: 16px;
+      font-size: 1.2rem;
+      margin: 16px 0 8px 0;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 16px;
+      font-size: 1rem;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+
+    input {
+      border: 2px solid #dde5ed;
+      background: white;
+    }
+
+    button {
+      background: #1e3b5c;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      opacity: 0.8;
+    }
+
+    button.secondary {
+      background: white;
+      color: #1e3b5c;
+      border: 2px solid #1e3b5c;
     }
 
     .balance {
       background: #1e3b5c;
-      border-radius: 16px;
-      padding: 16px;
       color: white;
-      margin-bottom: 16px;
+      padding: 20px;
+      border-radius: 16px;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
     .balance-amount {
-      font-size: 2rem;
-      font-weight: 700;
+      font-size: 2.5rem;
+      font-weight: bold;
     }
 
-    .btn {
-      border: none;
-      border-radius: 50px;
-      padding: 14px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
+    .card {
+      background: #f8fbfe;
+      padding: 16px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+
+    .users-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .user-btn {
+      background: white;
+      border: 2px solid #1e3b5c;
+      color: #1e3b5c;
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-weight: bold;
+      width: auto;
+      margin: 0;
+    }
+
+    .user-btn:active {
       background: #1e3b5c;
       color: white;
-      width: 100%;
     }
 
-    .btn:active {
-      opacity: 0.8;
-    }
-
-    .btn-outline {
+    .history-item {
+      padding: 12px;
       background: white;
-      color: #1e3b5c;
-      border: 1px solid #d0dce8;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
     }
 
-    input {
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
-      border: 1px solid #dde5ed;
-      border-radius: 12px;
+    .green {
+      color: #2a9d8f;
+      font-weight: bold;
+    }
+
+    .red {
+      color: #e76f51;
+      font-weight: bold;
+    }
+
+    .error {
+      color: #e74c3c;
+      font-size: 0.9rem;
       margin-bottom: 12px;
-      outline: none;
+    }
+
+    .success {
+      color: #2a9d8f;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .hidden {
+      display: none !important;
     }
 
     .tabs {
@@ -108,8 +157,6 @@
       text-align: center;
       background: #eef3f9;
       border-radius: 30px;
-      font-weight: 600;
-      color: #5f7d99;
       cursor: pointer;
     }
 
@@ -118,571 +165,385 @@
       color: white;
     }
 
-    .history-item {
-      padding: 12px;
-      border-bottom: 1px solid #e8eef4;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .amount-plus {
-      color: #2a9d8f;
-      font-weight: 700;
-    }
-
-    .amount-minus {
-      color: #e76f51;
-      font-weight: 700;
-    }
-
-    .error {
-      color: #e74c3c;
-      font-size: 0.85rem;
-      margin-top: -8px;
-      margin-bottom: 8px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .flex-between {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1e3b5c;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 50px;
-      z-index: 2000;
-      animation: fadeOut 2s forwards;
-    }
-
-    @keyframes fadeOut {
-      0%, 70% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-
-    .code-big {
-      font-size: 3rem;
-      font-weight: 700;
-      color: #1e3b5c;
-      letter-spacing: 8px;
-      text-align: center;
-      margin: 20px 0;
+    .info {
       background: #e8f0fe;
-      padding: 20px;
-      border-radius: 16px;
+      padding: 12px;
+      border-radius: 12px;
+      margin: 12px 0;
+      text-align: center;
     }
 
-    .info-text {
-      color: #6f8aa3;
-      font-size: 0.9rem;
-      margin: 8px 0;
-      text-align: center;
+    .big-code {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #1e3b5c;
+      letter-spacing: 5px;
+      margin: 16px 0;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
 <body>
-<div class="app">
-  <div class="logo">Logo Банк</div>
-
-  <!-- Авторизация -->
-  <div id="authScreen">
-    <div class="card">
-      <h2>Вход</h2>
-      <input type="text" id="loginUser" placeholder="Логин">
-      <input type="password" id="loginPass" placeholder="Пароль">
-      <div class="error" id="loginError"></div>
-      <button class="btn" id="loginBtn">Войти</button>
-      <button class="btn btn-outline" id="showRegBtn" style="margin-top:8px;">Регистрация</button>
-      <div style="margin-top:12px; font-size:0.9rem; color:#6f8aa3; text-align:center;">
-        💡 Демо: demo / demo
-      </div>
-    </div>
+  <div class="container" id="app">
+    <!-- Содержимое будет здесь -->
   </div>
 
-  <!-- Регистрация -->
-  <div id="regScreen" class="hidden">
-    <div class="card">
-      <h2>Регистрация</h2>
-      <input type="text" id="regUser" placeholder="Логин (мин. 3 символа)">
-      <input type="password" id="regPass" placeholder="Пароль (мин. 4 символа)">
-      <input type="password" id="regPassConfirm" placeholder="Повторите пароль">
-      <div class="error" id="regError"></div>
-      <button class="btn" id="regBtn">Создать аккаунт</button>
-      <button class="btn btn-outline" id="backToAuth" style="margin-top:8px;">← Назад</button>
-    </div>
-  </div>
-
-  <!-- Основной экран -->
-  <div id="mainScreen" class="hidden">
-    <div class="flex-between" style="margin-bottom:16px;">
-      <h2>👤 <span id="userName"></span></h2>
-      <button class="btn-outline" id="logoutBtn" style="width:auto; padding:8px 16px;">Выйти</button>
-    </div>
-
-    <!-- Баланс -->
-    <div class="balance">
-      <div>Баланс</div>
-      <div class="balance-amount"><span id="balance">0</span> ₽</div>
-    </div>
-
-    <!-- Табы -->
-    <div class="tabs">
-      <div class="tab active" data-tab="transfer">💸 Перевод</div>
-      <div class="tab" data-tab="deposit">⬆️ Пополнить</div>
-      <div class="tab" data-tab="payment">🛒 Оплата</div>
-    </div>
-
-    <!-- Перевод -->
-    <div id="transferTab" class="card">
-      <h2>Перевод по коду</h2>
+  <script>
+    // ПРОСТАЯ ВЕРСИЯ БЕЗ СЛОЖНОСТЕЙ
+    
+    let users = {};
+    let currentUser = null;
+    
+    // Загружаем данные
+    try {
+      const saved = localStorage.getItem('simple_bank');
+      if (saved) users = JSON.parse(saved);
+    } catch(e) {
+      users = {};
+    }
+    
+    // Создаём демо пользователя
+    if (!users['demo']) {
+      users['demo'] = {
+        password: 'demo',
+        balance: 5000,
+        transactions: []
+      };
+    }
+    
+    // Создаём тестового пользователя для переводов
+    if (!users['test']) {
+      users['test'] = {
+        password: 'test',
+        balance: 1000,
+        transactions: []
+      };
+    }
+    
+    // Коды для перевода (простые)
+    const codes = {
+      'demo': '111111',
+      'test': '222222'
+    };
+    
+    function save() {
+      localStorage.setItem('simple_bank', JSON.stringify(users));
+    }
+    
+    save();
+    
+    function render() {
+      const app = document.getElementById('app');
       
-      <!-- Варианты -->
-      <div style="display:flex; gap:8px; margin-bottom:16px;">
-        <button class="btn-outline" id="showMyCodeBtn" style="flex:1;">📱 Мой код</button>
-        <button class="btn-outline" id="showSendBtn" style="flex:1;">💸 Отправить</button>
-      </div>
-      
-      <!-- Мой код -->
-      <div id="myCodeBlock" class="hidden">
-        <div class="info-text">Покажите этот код отправителю:</div>
-        <div class="code-big" id="myCode"></div>
-        <canvas id="qrCanvas" style="display:block; margin:0 auto;"></canvas>
-        <button class="btn-outline" id="copyCodeBtn" style="margin-top:16px;">📋 Копировать код</button>
-        <button class="btn-outline" id="closeCodeBtn" style="margin-top:8px;">Закрыть</button>
-      </div>
-      
-      <!-- Отправка -->
-      <div id="sendBlock" class="hidden">
-        <input type="text" id="codeInput" placeholder="Введите 6-значный код" maxlength="6" inputmode="numeric">
-        <button class="btn" id="checkCodeBtn">Проверить код</button>
+      // Проверяем, есть ли сохранённая сессия
+      const savedUser = localStorage.getItem('simple_current_user');
+      if (savedUser && users[savedUser]) {
+        currentUser = savedUser;
+        renderMain();
+      } else {
+        renderLogin();
+      }
+    }
+    
+    function renderLogin() {
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <h1>🏦 Logo Банк</h1>
         
-        <!-- Форма перевода -->
-        <div id="sendForm" class="hidden" style="margin-top:16px;">
-          <div style="margin-bottom:12px; padding:12px; background:#e8f0fe; border-radius:12px;">
-            <strong>Получатель:</strong> <span id="recipientDisplay"></span>
+        <div class="card">
+          <h2>Вход</h2>
+          <input type="text" id="loginInput" placeholder="Логин" value="demo">
+          <input type="password" id="passInput" placeholder="Пароль" value="demo">
+          <div class="error" id="errorMsg"></div>
+          <button onclick="login()">Войти</button>
+          <button class="secondary" onclick="showRegister()">Регистрация</button>
+          <div style="margin-top:16px; text-align:center; color:#6f8aa3;">
+            💡 Логин: demo / test<br>Пароль: demo / test
           </div>
-          <input type="number" id="transferAmount" placeholder="Сумма" min="1" step="0.01">
-          <div class="error" id="transferError"></div>
-          <button class="btn" id="confirmTransferBtn">Отправить перевод</button>
-          <button class="btn-outline" id="cancelTransferBtn" style="margin-top:8px;">Отмена</button>
+        </div>
+      `;
+    }
+    
+    function showRegister() {
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <h1>🏦 Регистрация</h1>
+        
+        <div class="card">
+          <h2>Создать аккаунт</h2>
+          <input type="text" id="regLogin" placeholder="Логин (мин 3 символа)">
+          <input type="password" id="regPass" placeholder="Пароль (мин 4 символа)">
+          <div class="error" id="regError"></div>
+          <button onclick="register()">Зарегистрироваться</button>
+          <button class="secondary" onclick="renderLogin()">← Назад</button>
+        </div>
+      `;
+    }
+    
+    window.login = function() {
+      const login = document.getElementById('loginInput').value.trim();
+      const pass = document.getElementById('passInput').value;
+      
+      if (users[login] && users[login].password === pass) {
+        currentUser = login;
+        localStorage.setItem('simple_current_user', currentUser);
+        renderMain();
+      } else {
+        document.getElementById('errorMsg').textContent = '❌ Неверный логин или пароль';
+      }
+    };
+    
+    window.register = function() {
+      const login = document.getElementById('regLogin').value.trim();
+      const pass = document.getElementById('regPass').value;
+      
+      if (login.length < 3) {
+        document.getElementById('regError').textContent = '❌ Логин минимум 3 символа';
+        return;
+      }
+      if (pass.length < 4) {
+        document.getElementById('regError').textContent = '❌ Пароль минимум 4 символа';
+        return;
+      }
+      if (users[login]) {
+        document.getElementById('regError').textContent = '❌ Пользователь уже существует';
+        return;
+      }
+      
+      users[login] = {
+        password: pass,
+        balance: 0,
+        transactions: []
+      };
+      
+      // Даём код
+      codes[login] = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      save();
+      alert('✅ Регистрация успешна!');
+      renderLogin();
+    };
+    
+    function renderMain() {
+      const user = users[currentUser];
+      const app = document.getElementById('app');
+      
+      // Код пользователя
+      if (!codes[currentUser]) {
+        codes[currentUser] = Math.floor(100000 + Math.random() * 900000).toString();
+      }
+      
+      app.innerHTML = `
+        <h1>🏦 Logo Банк</h1>
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 style="margin:0;">👤 ${currentUser}</h2>
+          <button class="secondary" style="width:auto; padding:10px 20px;" onclick="logout()">Выйти</button>
         </div>
         
-        <button class="btn-outline" id="closeSendBtn" style="margin-top:16px;">Закрыть</button>
-      </div>
-    </div>
-
-    <!-- Пополнение -->
-    <div id="depositTab" class="card hidden">
-      <h2>Пополнение</h2>
-      <input type="number" id="depositSum" placeholder="Сумма" min="1">
-      <button class="btn" id="depositBtn">Пополнить</button>
-    </div>
-
-    <!-- Оплата -->
-    <div id="paymentTab" class="card hidden">
-      <h2>Оплата</h2>
-      <input type="text" id="paymentFor" placeholder="За что платим?">
-      <input type="number" id="paymentSum" placeholder="Сумма" min="1">
-      <button class="btn" id="paymentBtn">Оплатить</button>
-    </div>
-
-    <!-- История -->
-    <div class="card">
-      <h2>📋 История</h2>
-      <div id="historyContainer" style="max-height:200px; overflow-y:auto;"></div>
-    </div>
-  </div>
-</div>
-
-<script>
-  // ========== ДАННЫЕ ==========
-  let users = JSON.parse(localStorage.getItem('bank_users')) || {};
-  let currentUser = localStorage.getItem('bank_current_user') || null;
-  let currentRecipient = null;
-  
-  // Коды пользователей
-  let userCodes = JSON.parse(localStorage.getItem('bank_codes')) || {};
-
-  // Генерация кода
-  function generateUserCode(username) {
-    if (!userCodes[username]) {
-      // Генерируем простой 6-значный код
-      userCodes[username] = Math.floor(100000 + Math.random() * 900000).toString();
-      localStorage.setItem('bank_codes', JSON.stringify(userCodes));
+        <div class="balance">
+          <div>Баланс</div>
+          <div class="balance-amount">${user.balance.toFixed(2)} ₽</div>
+        </div>
+        
+        <div class="tabs">
+          <div class="tab active" onclick="showTab('transfer')">💸 Перевод</div>
+          <div class="tab" onclick="showTab('deposit')">⬆️ Пополнить</div>
+          <div class="tab" onclick="showTab('history')">📋 История</div>
+        </div>
+        
+        <div id="tabContent"></div>
+      `;
+      
+      showTab('transfer');
     }
-    return userCodes[username];
-  }
-
-  // Создаём демо если нет
-  if (!users['demo']) {
-    users['demo'] = {
-      password: 'demo',
-      balance: 5000,
-      transactions: [{
-        type: 'deposit',
-        amount: 5000,
-        desc: 'Начальный баланс',
-        date: new Date().toISOString()
-      }]
-    };
-    generateUserCode('demo');
-    saveUsers();
-  }
-
-  function saveUsers() {
-    localStorage.setItem('bank_users', JSON.stringify(users));
-  }
-
-  function showToast(text) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = text;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2000);
-  }
-
-  function updateUI() {
-    if (!currentUser) return;
     
-    const user = users[currentUser];
-    document.getElementById('userName').textContent = currentUser;
-    document.getElementById('balance').textContent = user.balance.toFixed(2);
-    
-    // История
-    const historyDiv = document.getElementById('historyContainer');
-    const tx = user.transactions || [];
-    
-    if (tx.length === 0) {
-      historyDiv.innerHTML = '<p style="color:#888; text-align:center;">Нет операций</p>';
-    } else {
-      historyDiv.innerHTML = tx.slice(-10).reverse().map(t => {
-        const isPlus = t.type === 'deposit' || t.to === currentUser;
-        return `
-          <div class="history-item">
-            <div>
-              <div>${t.desc || t.type}</div>
-              <small>${new Date(t.date).toLocaleString()}</small>
+    window.showTab = function(tab) {
+      // Обновляем активный таб
+      document.querySelectorAll('.tab').forEach((t, i) => {
+        t.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      const content = document.getElementById('tabContent');
+      const user = users[currentUser];
+      
+      if (tab === 'transfer') {
+        // Список других пользователей
+        const otherUsers = Object.keys(users).filter(u => u !== currentUser);
+        
+        content.innerHTML = `
+          <div class="card">
+            <h2>Мой код для получения</h2>
+            <div class="info">
+              <div style="font-size:0.9rem;">Покажите этот код отправителю:</div>
+              <div class="big-code">${codes[currentUser]}</div>
+              <button class="secondary" onclick="copyCode('${codes[currentUser]}')">📋 Копировать</button>
             </div>
-            <div class="${isPlus ? 'amount-plus' : 'amount-minus'}">
-              ${isPlus ? '+' : '-'}${t.amount.toFixed(2)} ₽
-            </div>
+            
+            <h2 style="margin-top:20px;">Отправить перевод</h2>
+            
+            ${otherUsers.length > 0 ? `
+              <div style="margin-bottom:12px;">
+                <div style="margin-bottom:8px;">Выберите получателя:</div>
+                <div class="users-list">
+                  ${otherUsers.map(u => `
+                    <button class="user-btn" onclick="selectUser('${u}')">${u}</button>
+                  `).join('')}
+                </div>
+              </div>
+            ` : '<p>Нет других пользователей</p>'}
+            
+            <input type="text" id="transferTo" placeholder="Или введите код получателя" maxlength="6">
+            <input type="number" id="transferAmount" placeholder="Сумма" min="1" step="0.01">
+            <div class="error" id="transferError"></div>
+            <button onclick="sendTransfer()">Отправить</button>
           </div>
         `;
-      }).join('');
-    }
-  }
-
-  function showMainScreen() {
-    document.getElementById('authScreen').classList.add('hidden');
-    document.getElementById('regScreen').classList.add('hidden');
-    document.getElementById('mainScreen').classList.remove('hidden');
-    
-    // Генерируем код
-    const code = generateUserCode(currentUser);
-    document.getElementById('myCode').textContent = code;
-    
-    // QR код
-    const canvas = document.getElementById('qrCanvas');
-    QRCode.toCanvas(canvas, code, { width: 200 });
-    
-    updateUI();
-  }
-
-  // Проверка при загрузке
-  if (currentUser && users[currentUser]) {
-    showMainScreen();
-  }
-
-  // ========== ОБРАБОТЧИКИ ==========
-  
-  // Вход
-  document.getElementById('loginBtn').onclick = () => {
-    const login = document.getElementById('loginUser').value.trim();
-    const pass = document.getElementById('loginPass').value;
-    
-    if (users[login] && users[login].password === pass) {
-      currentUser = login;
-      localStorage.setItem('bank_current_user', currentUser);
-      showMainScreen();
-      document.getElementById('loginUser').value = '';
-      document.getElementById('loginPass').value = '';
-    } else {
-      document.getElementById('loginError').textContent = 'Неверный логин или пароль';
-    }
-  };
-
-  // Enter для входа
-  document.getElementById('loginPass').onkeypress = (e) => {
-    if (e.key === 'Enter') document.getElementById('loginBtn').click();
-  };
-
-  document.getElementById('showRegBtn').onclick = () => {
-    document.getElementById('authScreen').classList.add('hidden');
-    document.getElementById('regScreen').classList.remove('hidden');
-  };
-
-  document.getElementById('backToAuth').onclick = () => {
-    document.getElementById('regScreen').classList.add('hidden');
-    document.getElementById('authScreen').classList.remove('hidden');
-  };
-
-  // Регистрация
-  document.getElementById('regBtn').onclick = () => {
-    const login = document.getElementById('regUser').value.trim();
-    const pass = document.getElementById('regPass').value;
-    const confirm = document.getElementById('regPassConfirm').value;
-    
-    if (login.length < 3) {
-      document.getElementById('regError').textContent = 'Логин от 3 символов';
-      return;
-    }
-    if (pass.length < 4) {
-      document.getElementById('regError').textContent = 'Пароль от 4 символов';
-      return;
-    }
-    if (pass !== confirm) {
-      document.getElementById('regError').textContent = 'Пароли не совпадают';
-      return;
-    }
-    if (users[login]) {
-      document.getElementById('regError').textContent = 'Пользователь уже есть';
-      return;
-    }
-    
-    users[login] = {
-      password: pass,
-      balance: 0,
-      transactions: []
-    };
-    
-    generateUserCode(login);
-    saveUsers();
-    showToast('✅ Регистрация успешна!');
-    
-    document.getElementById('regScreen').classList.add('hidden');
-    document.getElementById('authScreen').classList.remove('hidden');
-    document.getElementById('regUser').value = '';
-    document.getElementById('regPass').value = '';
-    document.getElementById('regPassConfirm').value = '';
-  };
-
-  document.getElementById('logoutBtn').onclick = () => {
-    currentUser = null;
-    localStorage.removeItem('bank_current_user');
-    document.getElementById('mainScreen').classList.add('hidden');
-    document.getElementById('authScreen').classList.remove('hidden');
-  };
-
-  // Показать мой код
-  document.getElementById('showMyCodeBtn').onclick = () => {
-    document.getElementById('myCodeBlock').classList.remove('hidden');
-    document.getElementById('sendBlock').classList.add('hidden');
-  };
-
-  document.getElementById('closeCodeBtn').onclick = () => {
-    document.getElementById('myCodeBlock').classList.add('hidden');
-  };
-
-  // Копировать код
-  document.getElementById('copyCodeBtn').onclick = () => {
-    const code = document.getElementById('myCode').textContent;
-    navigator.clipboard?.writeText(code);
-    showToast('📋 Код скопирован!');
-  };
-
-  // Показать отправку
-  document.getElementById('showSendBtn').onclick = () => {
-    document.getElementById('sendBlock').classList.remove('hidden');
-    document.getElementById('myCodeBlock').classList.add('hidden');
-    document.getElementById('sendForm').classList.add('hidden');
-    document.getElementById('codeInput').value = '';
-  };
-
-  document.getElementById('closeSendBtn').onclick = () => {
-    document.getElementById('sendBlock').classList.add('hidden');
-    currentRecipient = null;
-  };
-
-  // Проверка кода
-  document.getElementById('checkCodeBtn').onclick = () => {
-    const code = document.getElementById('codeInput').value.trim();
-    
-    if (code.length !== 6) {
-      alert('❌ Код должен быть 6 цифр');
-      return;
-    }
-    
-    // Ищем получателя по коду
-    const recipient = Object.keys(userCodes).find(u => userCodes[u] === code);
-    
-    if (!recipient) {
-      alert('❌ Неверный код. Попросите получателя показать код ещё раз.');
-      return;
-    }
-    
-    if (recipient === currentUser) {
-      alert('❌ Нельзя отправить самому себе');
-      return;
-    }
-    
-    currentRecipient = recipient;
-    document.getElementById('recipientDisplay').textContent = recipient;
-    document.getElementById('sendForm').classList.remove('hidden');
-  };
-
-  // Отмена перевода
-  document.getElementById('cancelTransferBtn').onclick = () => {
-    document.getElementById('sendForm').classList.add('hidden');
-    document.getElementById('codeInput').value = '';
-    currentRecipient = null;
-  };
-
-  // Подтверждение перевода
-  document.getElementById('confirmTransferBtn').onclick = () => {
-    if (!currentRecipient) {
-      alert('Получатель не выбран');
-      return;
-    }
-    
-    const amount = parseFloat(document.getElementById('transferAmount').value);
-    
-    if (amount <= 0 || isNaN(amount)) {
-      document.getElementById('transferError').textContent = 'Неверная сумма';
-      return;
-    }
-    if (amount > users[currentUser].balance) {
-      document.getElementById('transferError').textContent = 'Недостаточно средств';
-      return;
-    }
-    
-    // Выполняем перевод
-    users[currentUser].balance -= amount;
-    users[currentRecipient].balance += amount;
-    
-    const tx = {
-      type: 'transfer',
-      amount: amount,
-      from: currentUser,
-      to: currentRecipient,
-      desc: `Перевод для ${currentRecipient}`,
-      date: new Date().toISOString()
-    };
-    
-    if (!users[currentUser].transactions) users[currentUser].transactions = [];
-    if (!users[currentRecipient].transactions) users[currentRecipient].transactions = [];
-    
-    users[currentUser].transactions.push(tx);
-    users[currentRecipient].transactions.push({
-      ...tx,
-      desc: `От ${currentUser}`
-    });
-    
-    saveUsers();
-    updateUI();
-    
-    document.getElementById('transferAmount').value = '';
-    document.getElementById('sendForm').classList.add('hidden');
-    document.getElementById('sendBlock').classList.add('hidden');
-    document.getElementById('codeInput').value = '';
-    document.getElementById('transferError').textContent = '';
-    currentRecipient = null;
-    
-    showToast(`✅ Отправлено ${amount.toFixed(2)} ₽`);
-  };
-
-  // Пополнение
-  document.getElementById('depositBtn').onclick = () => {
-    const amount = parseFloat(document.getElementById('depositSum').value);
-    
-    if (amount <= 0 || isNaN(amount)) {
-      alert('Неверная сумма');
-      return;
-    }
-    
-    users[currentUser].balance += amount;
-    
-    if (!users[currentUser].transactions) users[currentUser].transactions = [];
-    users[currentUser].transactions.push({
-      type: 'deposit',
-      amount: amount,
-      desc: 'Пополнение',
-      date: new Date().toISOString()
-    });
-    
-    saveUsers();
-    updateUI();
-    
-    document.getElementById('depositSum').value = '';
-    showToast(`✅ Пополнено ${amount.toFixed(2)} ₽`);
-  };
-
-  // Оплата
-  document.getElementById('paymentBtn').onclick = () => {
-    const desc = document.getElementById('paymentFor').value.trim();
-    const amount = parseFloat(document.getElementById('paymentSum').value);
-    
-    if (!desc) {
-      alert('Укажите назначение');
-      return;
-    }
-    if (amount <= 0 || isNaN(amount)) {
-      alert('Неверная сумма');
-      return;
-    }
-    if (amount > users[currentUser].balance) {
-      alert('Недостаточно средств');
-      return;
-    }
-    
-    users[currentUser].balance -= amount;
-    
-    if (!users[currentUser].transactions) users[currentUser].transactions = [];
-    users[currentUser].transactions.push({
-      type: 'payment',
-      amount: amount,
-      desc: desc,
-      date: new Date().toISOString()
-    });
-    
-    saveUsers();
-    updateUI();
-    
-    document.getElementById('paymentSum').value = '';
-    document.getElementById('paymentFor').value = '';
-    showToast(`✅ Оплачено: ${desc}`);
-  };
-
-  // Табы
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.onclick = () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      
-      const t = tab.dataset.tab;
-      document.getElementById('transferTab').classList.add('hidden');
-      document.getElementById('depositTab').classList.add('hidden');
-      document.getElementById('paymentTab').classList.add('hidden');
-      
-      if (t === 'transfer') {
-        document.getElementById('transferTab').classList.remove('hidden');
-        document.getElementById('myCodeBlock').classList.add('hidden');
-        document.getElementById('sendBlock').classList.add('hidden');
+      } else if (tab === 'deposit') {
+        content.innerHTML = `
+          <div class="card">
+            <h2>Пополнение баланса</h2>
+            <input type="number" id="depositAmount" placeholder="Сумма" min="1" step="0.01">
+            <button onclick="deposit()">Пополнить</button>
+          </div>
+        `;
+      } else if (tab === 'history') {
+        const tx = user.transactions || [];
+        
+        if (tx.length === 0) {
+          content.innerHTML = `
+            <div class="card">
+              <p style="text-align:center; color:#888;">Нет операций</p>
+            </div>
+          `;
+        } else {
+          content.innerHTML = `
+            <div class="card">
+              ${tx.reverse().slice(0, 20).map(t => {
+                const isPlus = t.type === 'deposit' || t.to === currentUser;
+                return `
+                  <div class="history-item">
+                    <div>
+                      <div>${t.desc || t.type}</div>
+                      <small>${new Date(t.date).toLocaleString()}</small>
+                    </div>
+                    <div class="${isPlus ? 'green' : 'red'}">
+                      ${isPlus ? '+' : '-'}${t.amount.toFixed(2)} ₽
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          `;
+        }
       }
-      if (t === 'deposit') document.getElementById('depositTab').classList.remove('hidden');
-      if (t === 'payment') document.getElementById('paymentTab').classList.remove('hidden');
     };
-  });
-</script>
+    
+    window.copyCode = function(code) {
+      navigator.clipboard?.writeText(code);
+      alert('📋 Код скопирован!');
+    };
+    
+    window.selectUser = function(username) {
+      document.getElementById('transferTo').value = codes[username] || '';
+    };
+    
+    window.sendTransfer = function() {
+      const codeInput = document.getElementById('transferTo').value.trim();
+      const amount = parseFloat(document.getElementById('transferAmount').value);
+      
+      if (!codeInput) {
+        document.getElementById('transferError').textContent = '❌ Введите код получателя';
+        return;
+      }
+      
+      if (amount <= 0 || isNaN(amount)) {
+        document.getElementById('transferError').textContent = '❌ Неверная сумма';
+        return;
+      }
+      
+      if (amount > users[currentUser].balance) {
+        document.getElementById('transferError').textContent = '❌ Недостаточно средств';
+        return;
+      }
+      
+      // Ищем получателя по коду
+      let recipient = null;
+      for (let user in codes) {
+        if (codes[user] === codeInput) {
+          recipient = user;
+          break;
+        }
+      }
+      
+      if (!recipient) {
+        document.getElementById('transferError').textContent = '❌ Неверный код получателя';
+        return;
+      }
+      
+      if (recipient === currentUser) {
+        document.getElementById('transferError').textContent = '❌ Нельзя отправить себе';
+        return;
+      }
+      
+      // Выполняем перевод
+      users[currentUser].balance -= amount;
+      users[recipient].balance += amount;
+      
+      const tx = {
+        type: 'transfer',
+        amount: amount,
+        from: currentUser,
+        to: recipient,
+        desc: `Перевод для ${recipient}`,
+        date: new Date().toISOString()
+      };
+      
+      if (!users[currentUser].transactions) users[currentUser].transactions = [];
+      if (!users[recipient].transactions) users[recipient].transactions = [];
+      
+      users[currentUser].transactions.push(tx);
+      users[recipient].transactions.push({
+        ...tx,
+        desc: `От ${currentUser}`
+      });
+      
+      save();
+      alert(`✅ Отправлено ${amount.toFixed(2)} ₽ для ${recipient}`);
+      renderMain();
+    };
+    
+    window.deposit = function() {
+      const amount = parseFloat(document.getElementById('depositAmount').value);
+      
+      if (amount <= 0 || isNaN(amount)) {
+        alert('❌ Неверная сумма');
+        return;
+      }
+      
+      users[currentUser].balance += amount;
+      
+      if (!users[currentUser].transactions) users[currentUser].transactions = [];
+      users[currentUser].transactions.push({
+        type: 'deposit',
+        amount: amount,
+        desc: 'Пополнение',
+        date: new Date().toISOString()
+      });
+      
+      save();
+      alert(`✅ Пополнено ${amount.toFixed(2)} ₽`);
+      renderMain();
+    };
+    
+    window.logout = function() {
+      currentUser = null;
+      localStorage.removeItem('simple_current_user');
+      renderLogin();
+    };
+    
+    // Запуск
+    render();
+  </script>
 </body>
 </html>
